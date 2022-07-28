@@ -1,9 +1,9 @@
 import React from 'react'
 
-const index = () => {
+const Helper = () => {
   return (
-    <div>index</div>
+    <div>Helper</div>
   )
 }
 
-export default index
+export default Helper

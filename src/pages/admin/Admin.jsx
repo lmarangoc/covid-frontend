@@ -1,9 +1,9 @@
 import React from 'react'
 
-const index = () => {
+const Admin = () => {
   return (
-    <div>index</div>
+    <div>Admin</div>
   )
 }
 
-export default index
+export default Admin
