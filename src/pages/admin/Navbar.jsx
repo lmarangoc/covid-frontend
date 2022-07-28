@@ -14,9 +14,19 @@ const Navbar = () => {
             <input className='rounded-lg border border-gray-600 py-2 px-3 w-full focus:outline-indigo-500' type="text" placeholder="Search" name="search"/>
             <FontAwesomeIcon icon={faMagnifyingGlass} className='w-8 h-8 hover:text-indigo-500'/>
         </div>
-        <div>
-          <button className='md:block hidden bg-indigo-500 text-white px-4 py-2 rounded-lg'>Add User</button>
+        <div className='md:block hidden'>
+          <button className='bg-indigo-500 text-white px-4 py-2 rounded-lg'>
+            Add User
+          </button>
         </div>
+        <ul className={`md:hidden bg-white absolute w-full h-full bottom-0 py-24 pl-4`}>
+          <li>
+            <input className='rounded-lg border border-gray-600 py-2 px-3 w-max focus:outline-indigo-500' type="text" placeholder="Search" name="search"/>
+          </li>
+          <div className='py-5'>
+            <button className='bg-indigo-500 text-white px-4 py-2 rounded-lg'>Add User</button>
+          </div>
+        </ul>
       </div>
     </nav>
   )

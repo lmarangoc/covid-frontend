@@ -1,47 +1,35 @@
-import React from 'react';
-import Photo from '../media/medicine1.png';
-import LogoImage from '../components/LogoImage';
-import { Link } from "react-router-dom";
+import React from 'react'
+import { Link } from "react-router-dom"
+import LogoImage from "../components/LogoImage"
 
 const Login = () => {
 
   return (
-    <div className='flex'>
-      <div className={`w-80 h-screen bg-indigo-500`}>
-        <div className='pt-12'>
-          <Link to='/'>
-            <LogoImage/> 
-          </Link>
-        </div>
-        <div className='pt-7 flex justify-center justify-items-start'>
-          <p className='font-open text-2xl text-white select-none'> Log in to your account </p>
-        </div>
-        <div className='w-full max-w-xs'>
-          <form onSubmit={(e) => { e.preventDefault();}} className='px-8 mt-5 pt-10 pb-8 mb-4'>
-            <div className='mb-8'>
-              <label className='block text-white text-base font-medium mb-2 select-none' for="username">
-                Username
-              </label>
-              <input className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:ring-cyan-700 focus:border-cyan-700 focus:z-10 ' type="text" placeholder="username" name="username" required />
-            </div>
-            <div class="mb-8">
-              <label className='block text-base text-white font-medium mb-2 select-none' for="password">
-                Password
-              </label>
-              <input className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:ring-cyan-700 focus:border-cyan-700 focus:z-10 ' type="password" placeholder="**********" name="password" required/>
-            </div>
-            <div className='flex items-center justify-center'>
-              <Link to='/admin'>
-                <button className='bg-blue-900 hover:bg-blue-700 text-white text-lg font-medium py-2 px-4 rounded-lg shadow-md focus:outline-none focus:shadow-outline' type="submit">
-                  Login
-                </button>
-              </Link>
-            </div>
-          </form>
-        </div>
+    <div className='flex flex-col justify-center justify-items-center'>
+      <div className='pt-12'>
+        <Link to='/'>
+          <LogoImage/> 
+        </Link>
       </div>
-      <div className='px-14 py-0 md:flex hidden justify-center items-center h-screen'>
-        <img className='mx-auto w-full h-full' src={Photo} alt='Medicine' />
+      <div className='pt-7 flex justify-center justify-items-center'>
+        <p className='text-2xl font-light select-none'> Log in to your account </p>
+      </div>
+      <div className='pt-12 flex justify-center justify-items-center'>
+        <form className='shadow-md rounded px-8 pt-6 pb-8 mb-4 bg-gray-300'>
+          <div className='border-b border-indigo-500 py-2 mb-4'>
+            <input type="text" className='appearance-none bg-transparent border-none w-full text-gray-900 mr-3 py-1 px-2 leading-tight focus:outline-none' placeholder="username" name="username" required/>
+          </div>
+          <div className='border-b border-indigo-500 py-2 mb-8'>
+            <input type="password" className='appearance-none bg-transparent border-none w-full text-gray-900 mr-3 py-1 px-2 leading-tight focus:outline-none' placeholder="password" name="password" required />
+          </div>
+          <div className='flex justify-center justify-items-center'>
+            <Link to='/admin' className='w-full'>
+              <button type='submit' className='bg-indigo-500 text-white w-full px-4 py-2 rounded hover:bg-indigo-700 select-none'> 
+                Login 
+              </button>
+            </Link>
+          </div>
+        </form>
       </div>
     </div>
   )
