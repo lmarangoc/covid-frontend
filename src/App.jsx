@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import Admin from './pages/admin/Admin';
 import Doctor from './pages/doctor/Doctor';
 import Helper from './pages/helper/Helper';
+import NotFound from "./pages/NotFound";
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
           <Route path="/admin" element={<Admin />} />
           <Route path="/doctor" element={<Doctor />} />
           <Route path="/helper" element={<Helper />} />
+          <Route path="*" element={<NotFound />} />
         </Routes> 
       </BrowserRouter>
     </div>
