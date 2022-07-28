@@ -32,7 +32,7 @@ const Login = () => {
             </div>
             <div className='flex items-center justify-center'>
               <Link to='/admin'>
-                <button className='bg-blue-900 hover:bg-blue-700 text-white text-lg font-medium py-2 px-4 rounded focus:outline-none focus:shadow-outline' type="submit">
+                <button className='bg-blue-900 hover:bg-blue-700 text-white text-lg font-medium py-2 px-4 rounded-lg shadow-md focus:outline-none focus:shadow-outline' type="submit">
                   Login
                 </button>
               </Link>
