@@ -40,7 +40,7 @@ const Login = () => {
           </form>
         </div>
       </div>
-      <div className='px-14 py-0 flex justify-center items-center h-screen'>
+      <div className='px-14 py-0 md:flex hidden justify-center items-center h-screen'>
         <img className='mx-auto w-full h-full' src={Photo} alt='Medicine' />
       </div>
     </div>
