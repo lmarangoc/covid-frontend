@@ -1,35 +1,40 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHospitalUser, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
-//import { Link } from "react-router-dom";
+import { faHospitalUser } from '@fortawesome/free-solid-svg-icons'
+import { Link } from "react-router-dom"
 
 const Navbar = () => {
+
   return (
-    <nav className='bg-white px-0 py-5 '>
+    <nav className='py-5'>
       <div className='flex items-center justify-around'>
+        <div className='relative group'> 
+          <FontAwesomeIcon icon={faHospitalUser} className='w-10 h-10 text-indigo-500 hover:text-indigo-700'/>
+          <div className='lg:absolute bg-gray-50 right-0 rounded p-2 hidden group-hover:block hover:block'>
+            <ul className='space-y-2 lg:w-32'>
+              <li className='flex p-2 font-medium text-gray-600 rounded'> 
+                Admin Admin
+              </li>
+              <li className='flex p-2 font-medium text-indigo-500 rounded hover:bg-gray-200 hover:text-indigo-700'>
+                <Link to='/'>
+                  Log Out
+                </Link>
+              </li>
+            </ul>
+          </div>
+        </div>
         <div>
-          <FontAwesomeIcon icon={faHospitalUser} className='w-8 h-8 hover:text-indigo-500'/>
+          <input type="text" className='rounded border border-gray-600 py-2 px-3 w-64 focus:outline-indigo-500' placeholder="Search" name="search"/>
         </div>
-        <div className='md:flex hidden items-center gap-8'>
-            <input className='rounded-lg border border-gray-600 py-2 px-3 w-full focus:outline-indigo-500' type="text" placeholder="Search" name="search"/>
-            <FontAwesomeIcon icon={faMagnifyingGlass} className='w-8 h-8 hover:text-indigo-500'/>
-        </div>
-        <div className='md:block hidden'>
-          <button className='bg-indigo-500 text-white px-4 py-2 rounded-lg'>
+        <div>
+          <button className='bg-indigo-500 text-white px-4 py-2 rounded hover:bg-indigo-700 select-none'>
             Add User
           </button>
         </div>
-        <ul className={`md:hidden bg-white absolute w-full h-full bottom-0 py-24 pl-4`}>
-          <li>
-            <input className='rounded-lg border border-gray-600 py-2 px-3 w-max focus:outline-indigo-500' type="text" placeholder="Search" name="search"/>
-          </li>
-          <div className='py-5'>
-            <button className='bg-indigo-500 text-white px-4 py-2 rounded-lg'>Add User</button>
-          </div>
-        </ul>
       </div>
     </nav>
   )
 }
 
 export default Navbar
+
