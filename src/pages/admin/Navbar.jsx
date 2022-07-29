@@ -7,7 +7,7 @@ const Navbar = () => {
 
   return (
     <nav className='py-5'>
-      <div className='flex items-center justify-around'>
+      <div className='flex items-center justify-between'>
         <div className='relative group'> 
           <FontAwesomeIcon icon={faHospitalUser} className='w-10 h-10 text-indigo-500 hover:text-indigo-700'/>
           <div className='lg:absolute bg-gray-50 right-0 rounded p-2 hidden group-hover:block hover:block'>
@@ -27,7 +27,7 @@ const Navbar = () => {
           <input type="text" className='rounded border border-gray-600 py-2 px-3 w-64 focus:outline-indigo-500' placeholder="Search" name="search"/>
         </div>
         <div>
-          <button className='bg-indigo-500 text-white px-4 py-2 rounded hover:bg-indigo-700 select-none'>
+          <button className='bg-indigo-500 text-white px-4 py-2 rounded hover:rounded-full select-none'>
             Add User
           </button>
         </div>

@@ -46,7 +46,7 @@ const users = [
 
 const Admin = () => {
   return (
-    <div>
+    <div className='px-52'>
       <Navbar/>
     </div>
   )
