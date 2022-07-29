@@ -4,8 +4,8 @@ import Logo from '../media/logo.png';
 
 const Navbar = () => {
   return (
-    <nav className='px-2 py-2.5'>
-      <div className='container flex flex-wrap items-center justify-around mx-auto'>
+    <nav className='py-2.5'>
+      <div className='container flex flex-wrap items-center justify-between mx-auto'>
         <Link to='/'>
           <img className='mr-3 h-6 sm:h-9 select-none' src={Logo} alt='COVID-19 Tracker' />
         </Link>
@@ -13,7 +13,7 @@ const Navbar = () => {
           <ul>
             <li>
               <Link to='/login'>
-                <button className='bg-indigo-500 text-white w-full px-4 py-2 rounded hover:bg-indigo-700 select-none'>
+                <button className='bg-indigo-500 text-white w-full px-4 py-2 rounded hover:rounded-full select-none'>
                   Sign In
                 </button>
               </Link>

@@ -3,7 +3,7 @@ import Navbar from '../components/Navbar'
 
 const Home = () => {
   return (
-    <div>
+    <div className='px-52'>
       <Navbar/>
       <div>
         Hola  
