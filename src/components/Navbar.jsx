@@ -7,7 +7,7 @@ const Navbar = () => {
     <nav className='py-5'>
       <div className='container flex flex-wrap items-center justify-between mx-auto'>
         <Link to='/'>
-          <img className='mr-3 h-6 sm:h-9 select-none' src={Logo} alt='COVID-19 Tracker' />
+          <img className='h-10 select-none' src={Logo} alt='COVID-19 Tracker' />
         </Link>
         <div>
           <ul>

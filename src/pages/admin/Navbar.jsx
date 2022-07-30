@@ -1,14 +1,19 @@
 import React from 'react'
+import Logo from '../../media/logo.png';
+import { Link } from "react-router-dom"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHospitalUser } from '@fortawesome/free-solid-svg-icons'
 import { Tooltip } from '@material-ui/core';
-import { Link } from "react-router-dom"
 
 const Navbar = () => {
 
   return (
     <nav className='py-5'>
       <div className='flex items-center justify-between'>
+        <Link to='/'>
+          <img className='h-10 select-none' src={Logo} alt='COVID-19 Tracker' />
+        </Link>
+        <h1 className='text-4xl font-light select-none'> All Users </h1>
         <div className='relative group'>
           <Tooltip title='User settings' arrow placement='right'>
             <FontAwesomeIcon icon={faHospitalUser} className='w-10 h-10 text-indigo-500 hover:text-indigo-700'/>
@@ -25,14 +30,6 @@ const Navbar = () => {
             </ul>
           </div>
         </div>
-        <div>
-            <input type="text" className='rounded border border-gray-600 py-2 px-3 w-64 focus:outline-indigo-500' placeholder="Search" name="search"/>
-          </div>
-          <div>
-            <button className='bg-indigo-500 text-white px-4 py-2 rounded hover:rounded-full select-none'>
-              Add User
-            </button>
-          </div>
       </div>
     </nav>
   )
