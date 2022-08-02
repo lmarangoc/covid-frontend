@@ -92,16 +92,16 @@ const UsersTable = ({ usersList }) => {
           Add User
         </button>
       </div>
-      <table>
-        <thead>
+      <table className='w-full mt-12 mb-12 text-lg text-left'>
+        <thead className='bg-indigo-500 bg-opacity-100 text-white'>
           <tr>
-            <th> Name </th>
-            <th> Lastname </th>
-            <th> ID Card </th>
-            <th> Role </th>
-            <th> User </th>
-            <th> Password </th>
-            <th> Action </th>
+            <th className='py-3 px-6 select-none'> Name </th>
+            <th className='py-3 px-6 select-none'> Lastname </th>
+            <th className='py-3 px-6 select-none'> ID Card </th>
+            <th className='py-3 px-6 select-none'> Role </th>
+            <th className='py-3 px-6 select-none'> User </th>
+            <th className='py-3 px-6 select-none'> Password </th>
+            <th className='py-3 px-6 select-none'> Action </th>
           </tr>
         </thead>
         <tbody>
@@ -130,7 +130,7 @@ const UserRow = ({user}) => {
   })
 
   return (
-    <tr>
+    <tr className='border-b hover:bg-gray-100'>
       { edit ? (
         <>
         <td>
@@ -138,7 +138,7 @@ const UserRow = ({user}) => {
             type="text" 
             value={userInformation.name} 
             onChange={e => setUserInformation({...userInformation, name:e.target.value})} 
-            className=''
+            className='bg-gray-100 border border-gray-600 p-2 rounded-lg m-2 w-full text-base'
           />
         </td>
         <td>
@@ -146,7 +146,7 @@ const UserRow = ({user}) => {
             type="text" 
             value={userInformation.lastname} 
             onChange={e => setUserInformation({...userInformation, lastname:e.target.value})} 
-            className=''
+            className='bg-gray-100 border border-gray-600 p-2 rounded-lg m-2 w-full text-base'
           />
         </td>
         <td>
@@ -154,7 +154,7 @@ const UserRow = ({user}) => {
             type="text" 
             value={userInformation.idcard} 
             onChange={e => setUserInformation({...userInformation, idcard:e.target.value})} 
-            className=''
+            className='bg-gray-100 border border-gray-600 p-2 rounded-lg m-2 w-full text-base'
           />
         </td>
         <td>
@@ -162,7 +162,7 @@ const UserRow = ({user}) => {
             type="text" 
             value={userInformation.role} 
             onChange={e => setUserInformation({...userInformation, role:e.target.value})} 
-            className=''
+            className='bg-gray-100 border border-gray-600 p-2 rounded-lg m-2 w-full text-base'
           />
         </td>
         <td>
@@ -170,7 +170,7 @@ const UserRow = ({user}) => {
             type="text" 
             value={userInformation.user} 
             onChange={e => setUserInformation({...userInformation, user:e.target.value})} 
-            className=''
+            className='bg-gray-100 border border-gray-600 p-2 rounded-lg m-2 w-full text-base'
           />
         </td>
         <td>
@@ -178,35 +178,35 @@ const UserRow = ({user}) => {
             type="text" 
             value={userInformation.password} 
             onChange={e => setUserInformation({...userInformation, password:e.target.value})} 
-            className=''
+            className='bg-gray-100 border border-gray-600 p-2 rounded-lg m-2 w-full text-base'
           />
         </td>
       </>
       ) : (
         <>
-          <td> {user.name} </td>
-          <td> {user.lastname} </td>
-          <td> {user.idcard} </td>
-          <td> {user.role} </td>
-          <td> {user.user} </td>
-          <td> {user.password} </td>
+          <td className='py-4 px-6 text-base'> {user.name} </td>
+          <td className='py-4 px-6 text-base'> {user.lastname} </td>
+          <td className='py-4 px-6 text-base'> {user.idcard}  </td>
+          <td className='py-4 px-6 text-base'> {user.role} </td>
+          <td className='py-4 px-6 text-base'> {user.user} </td>
+          <td className='py-4 px-6 text-base'> {user.password} </td>
         </>
       )}
 
       <td>
-        <div>
+        <div className='flex w-full justify-around'>
           {edit ? (
             <>
               <Tooltip title='Confirm edition' arrow>
                 <FontAwesomeIcon icon={faCheck} 
                   onClick={() => setEdit(!edit)}
-                  className='text-green-700 hover:text-green-500'
+                  className='text-green-600 hover:text-green-500'
                 />
               </Tooltip>
               <Tooltip title='Cancel edition' arrow>
                 <FontAwesomeIcon icon={faBan} 
                   onClick={() => setEdit(!edit)}
-                  className='text-yellow-700 hover:text-yellow-500'
+                  className='text-red-600 hover:text-red-500'
                 />
               </Tooltip>
             </>
@@ -215,27 +215,27 @@ const UserRow = ({user}) => {
               <Tooltip title='Edit user' arrow>
                 <FontAwesomeIcon icon={faPencilAlt} 
                   onClick={() => setEdit(!edit)}
-                  className='text-yellow-700 hover:text-yellow-500'
+                  className='text-blue-600 hover:text-blue-500'
                 />
               </Tooltip>
               <Tooltip title='Delete user' arrow>
                 <FontAwesomeIcon icon={faTrash} 
                   onClick={() => setOpenDialog(true)}
-                  className='text-red-700 hover:text-red-500'/>
+                  className='text-red-600 hover:text-red-500'/>
               </Tooltip>
             </>
           )}
         </div>
         <Dialog open={openDialog}>
-          <div>
-            <h1>
+          <div className='p-8 flex flex-col'>
+            <h1 className='text-gray-900 text-2xl font-bold'>
               Are you sure you want to remove the user?
             </h1>
-            <div>
-              <button onClick={() => setOpenDialog(false)}>
+            <div className='flex w-full items-center justify-center my-4'>
+              <button onClick={() => setOpenDialog(false)} className='mx-2 px-4 py-2 bg-green-500 text-white hover:bg-green-700 rounded-md shadow-md'>
                 Sí
               </button>
-              <button onClick={() => setOpenDialog(false)}>
+              <button onClick={() => setOpenDialog(false)} className='mx-2 px-4 py-2 bg-red-500 text-white hover:bg-red-700 rounded-md shadow-md'>
                 No
               </button>
             </div>
