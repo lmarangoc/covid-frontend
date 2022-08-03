@@ -1,15 +1,15 @@
 import React from 'react'
 import Sidebar from './Sidebar'
 
-const Doctor = () => {
+const SearchCase = () => {
   return (
     <div className='flex'>
       <Sidebar/>
       <div className='p-7 text-2xl font-semibold flex-1 h-screen'>
-        <h1> Doctor </h1>
+        <h1> Search Case </h1>
       </div>
     </div>
   )
 }
 
-export default Doctor
+export default SearchCase
