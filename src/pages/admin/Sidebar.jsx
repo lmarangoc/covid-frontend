@@ -36,7 +36,7 @@ const Menu = ({ open }) => {
   return (
     <ul className='pt-6'>
       <Link to='/admin'>
-        <li className='text-gray-100 text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-light-white rounded-md mt-2'> 
+        <li className='text-gray-100 text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-light-white bg-light-white rounded-md mt-2'> 
           <FontAwesomeIcon icon={faHospitalUser} className='text-white h-6 w-6'/>
           <span className={`select-none ${!open && 'hidden'} origin-left duration-200`}> 
             Admin

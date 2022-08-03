@@ -79,13 +79,13 @@ const UsersTable = ({ usersList }) => {
   }, [search, usersList])
 
   return (
-    <div className='container w-full pt-10'>
-      <div className='flex flex-row items-center justify-around'>
+    <div className='w-full p-20'>
+      <div className='flex flex-row items-center justify-evenly'>
         <input 
           placeholder="Search" 
           value={search} 
           onChange={(e) => setSearch(e.target.value)}
-          className='rounded border border-gray-600 py-2 px-3 w-5/12 focus:outline-indigo-500'
+          className='rounded border border-gray-400 py-2 px-3 w-3/12 focus:outline-indigo-500'
         />
         <button 
           onClick={() => setOpenModal((c) => !c)}
@@ -95,7 +95,7 @@ const UsersTable = ({ usersList }) => {
           Add User
         </button>
       </div>
-      <table className='w-full mt-12 mb-12 text-lg text-left'>
+      <table className='w-11/12 mt-12 mb-12 text-lg text-left'>
         <thead className='bg-indigo-500 bg-opacity-100 text-white'>
           <tr>
             <th className='py-3 px-6 select-none'> Name </th>
