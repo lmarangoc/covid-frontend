@@ -3,7 +3,7 @@ import Navbar from './Navbar'
 import { nanoid } from 'nanoid'
 import { Dialog, Tooltip } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCheck, faBan, faPencilAlt, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faCheck, faBan, faPencilAlt, faTrash, faXmark } from '@fortawesome/free-solid-svg-icons'
 
 const usersBackend = [
   {
@@ -68,6 +68,7 @@ const UsersTable = ({ usersList }) => {
 
   const [search, setSearch] = useState('')
   const [filterU, setFilterU] = useState(usersList)
+  const [openModal, setOpenModal] = useState(false)
 
   useEffect(() => {
     setFilterU(
@@ -87,6 +88,8 @@ const UsersTable = ({ usersList }) => {
           className='rounded border border-gray-600 py-2 px-3 w-5/12 focus:outline-indigo-500'
         />
         <button 
+          onClick={() => setOpenModal((c) => !c)}
+          type='submit'
           className='bg-indigo-500 text-white px-4 py-2 rounded hover:rounded-full select-none'
         >
           Add User
@@ -112,6 +115,7 @@ const UsersTable = ({ usersList }) => {
           })}
         </tbody>
       </table>
+      <Modal stt={openModal} changeState={setOpenModal}/>
     </div>
   )
 }
@@ -244,6 +248,56 @@ const UserRow = ({user}) => {
       </td>
 
     </tr>
+  )
+}
+
+const Modal = ({ stt, changeState }) => {
+  return (
+    <div>
+      <Dialog open={stt}>
+        <div className='w-96 h-4/5'>
+          <div className='flex justify-between items-start p-3 border-b'>
+            <h1 className='text-3xl font-base select-none'> Register New User </h1>
+            <button onClick={() => changeState(false)}>
+              <FontAwesomeIcon 
+                icon={faXmark} 
+                className='w-6 h-6 p-2 text-gray-400 hover:bg-gray-200 rounded-lg'
+              />
+            </button>
+          </div>
+          <form>
+            <div className='p-6'>
+              <div className='border-b border-gray-400 pb-2 mb-3'>
+                <input type="text" className='appearance-none bg-transparent border-none w-full text-gray-900 mr-3 py-1 px-2 leading-tight focus:outline-none' placeholder="Name" name="name" required />
+              </div>
+              <div className='border-b border-gray-400 py-2 mb-3'>
+                <input type="text" className='appearance-none bg-transparent border-none w-full text-gray-900 mr-3 py-1 px-2 leading-tight focus:outline-none' placeholder="Lastname" name="lastname" required />
+              </div>
+              <div className='border-b border-gray-400 py-2 mb-3'>
+                <input type="text" className='appearance-none bg-transparent border-none w-full text-gray-900 mr-3 py-1 px-2 leading-tight focus:outline-none' placeholder="ID Card" name="idcard" required />
+              </div>
+              <div className='border-b border-gray-400 py-2 mb-3'>
+                <select className='w-full focus:outline-none text-gray-900 mr-3 py-1 pl-1 pr-2 leading-tight' name="role" required defaultValue={0}>
+                  <option disabled value={0}> Select a role </option>
+                  <option> doctor </option>
+                  <option> helper </option>
+                </select>
+              </div>
+              <div className='border-b border-gray-400 py-2 mb-3'>
+                <input type="text" className='appearance-none bg-transparent border-none w-full text-gray-900 mr-3 py-1 px-2 leading-tight focus:outline-none' placeholder="Username" name="username" required />
+              </div>
+              <div className='border-b border-gray-400 py-2 mb-8'>
+                <input type="password" className='appearance-none bg-transparent border-none w-full text-gray-900 mr-3 py-1 px-2 leading-tight focus:outline-none' placeholder="Password" name="password" required />
+              </div>
+              <button type='submit' 
+              className='bg-indigo-700 text-white w-full px-4 py-2 rounded hover:bg-indigo-500 select-none'> 
+                Save User
+              </button>
+            </div>
+          </form>
+        </div>
+      </Dialog>
+    </div>
   )
 }
 
