@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import Navbar from './Navbar'
+import Sidebar from './Sidebar';
 import { nanoid } from 'nanoid'
 import { Dialog, Tooltip } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -57,8 +57,8 @@ const Admin = () => {
   }, [])
 
   return (
-    <div className='px-52'>
-      <Navbar/>
+    <div className='flex'>
+      <Sidebar/>
       <UsersTable usersList={users} />
     </div>
   )
