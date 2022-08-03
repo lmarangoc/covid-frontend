@@ -3,7 +3,7 @@ import Control from '../../media/control.png'
 import Logo from '../../media/logo.png'
 import { Link } from "react-router-dom"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHospitalUser, faMagnifyingGlassLocation, faMapLocation, faArrowRightFromBracket} from '@fortawesome/free-solid-svg-icons'
+import { faHospitalUser, faArrowRightFromBracket} from '@fortawesome/free-solid-svg-icons'
 
 const Sidebar = () => {
 
