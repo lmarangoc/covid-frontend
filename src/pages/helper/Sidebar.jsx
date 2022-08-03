@@ -35,30 +35,38 @@ const Sidebar = () => {
 const Menu = ({ open }) => {
   return (
     <ul className='pt-6'>
-      <li className='text-gray-100 text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-light-white rounded-md mt-2'> 
-        <FontAwesomeIcon icon={faUser} className='text-white h-6 w-6'/>
-        <span className={`select-none ${!open && 'hidden'} origin-left duration-200`}> 
-          Helper
-        </span>
-      </li>
-      <li className='text-gray-100 text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-light-white rounded-md mt-9'>
-        <FontAwesomeIcon icon={faUserPlus} className='text-white h-6 w-6'/>
-        <span className={`select-none ${!open && 'hidden'} origin-left duration-200`}> 
-          Register Case 
-        </span>
-      </li>
-      <li className='text-gray-100 text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-light-white rounded-md mt-2'>
-        <FontAwesomeIcon icon={faBarsProgress} className='text-white h-6 w-6'/>
-        <span className={`select-none ${!open && 'hidden'} origin-left duration-200`}> 
-          Manage Case 
-        </span>
-      </li>
-      <li className='text-gray-100 text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-light-white rounded-md mt-9'>
-        <FontAwesomeIcon icon={faArrowRightFromBracket} className='text-white h-6 w-6'/>
-        <span className={`select-none ${!open && 'hidden'} origin-left duration-200`}> 
-          Log Out
-        </span>
-      </li>
+      <Link to='/helper'>
+        <li className='text-gray-100 text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-light-white rounded-md mt-2'> 
+          <FontAwesomeIcon icon={faUser} className='text-white h-6 w-6'/>
+          <span className={`select-none ${!open && 'hidden'} origin-left duration-200`}> 
+            Helper
+          </span>
+        </li>
+      </Link>
+      <Link to='/helper/registercase'>
+        <li className='text-gray-100 text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-light-white rounded-md mt-9'>
+          <FontAwesomeIcon icon={faUserPlus} className='text-white h-6 w-6'/>
+            <span className={`select-none ${!open && 'hidden'} origin-left duration-200`}> 
+              Register Case 
+            </span>
+        </li>
+      </Link>
+      <Link to='/helper/managecase'>
+        <li className='text-gray-100 text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-light-white rounded-md mt-2'>
+          <FontAwesomeIcon icon={faBarsProgress} className='text-white h-6 w-6'/>
+          <span className={`select-none ${!open && 'hidden'} origin-left duration-200`}> 
+            Manage Case 
+          </span>
+        </li>
+      </Link>
+      <Link to='/'>
+        <li className='text-gray-100 text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-light-white rounded-md mt-9'>
+          <FontAwesomeIcon icon={faArrowRightFromBracket} className='text-white h-6 w-6'/>
+          <span className={`select-none ${!open && 'hidden'} origin-left duration-200`}> 
+            Log Out
+          </span>  
+        </li>
+      </Link>
     </ul>
   )
 }
