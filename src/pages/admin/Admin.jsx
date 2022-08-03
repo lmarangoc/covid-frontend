@@ -1,70 +1,52 @@
 import React, { useState, useEffect } from 'react'
-import Sidebar from './Sidebar';
+import Sidebar from './Sidebar'
 import { nanoid } from 'nanoid'
-import { Dialog, Tooltip } from '@material-ui/core';
+import { Dialog, Tooltip } from '@material-ui/core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck, faBan, faPencilAlt, faTrash, faXmark } from '@fortawesome/free-solid-svg-icons'
-
-const usersBackend = [
-  {
-    name: "Jennie",
-    lastname: "Kim",
-    idcard: "200107320",
-    role: "doctor",
-    user: "jkin",
-    password: "jk7320",
-  },
-  {
-    name: "Lalisa",
-    lastname: "Manobal",
-    idcard: "200107321",
-    role: "helper",
-    user: "lmanobal",
-    password: "lm7321",
-  },
-  {
-    name: "Jisoo",
-    lastname: "Kim",
-    idcard: "200107322",
-    role: "doctor",
-    user: "jikim",
-    password: "jk7322",
-  },
-  {
-    name: "Roseanne",
-    lastname: "Park",
-    idcard: "200107323",
-    role: "helper",
-    user: "rpark",
-    password: "rp7323",
-  },
-  {
-    name: "Taylor",
-    lastname: "Swift",
-    idcard: "200107324",
-    role: "doctor",
-    user: "tswift",
-    password: "ts7324",
-  },
-]
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import { getUsers, createUser, editUser, deleteUser } from '../../utils/api'
+import ReactLoading from 'react-loading'
 
 const Admin = () => {
 
   const [users, setUsers] = useState([])
+  const [runQuery, setRunQuery] = useState(false)
+  const [loading, setLoading] = useState(false)
 
-  useEffect( () => {
-    setUsers(usersBackend)
-  }, [])
+  useEffect(() => {
+    const fetchUsers = async () => {
+      setLoading(true)
+      await getUsers(
+        (response) => {
+          console.log('The response received was', response);
+          setUsers(response.data)
+          setRunQuery(false)
+          setLoading(false)
+        },
+        (error) => {
+          console.error('Error obtained:', error)
+          setLoading(false)
+        }
+      )
+    }
+    console.log('query', runQuery)
+    if (runQuery) {
+      fetchUsers()
+    }
+  }, [runQuery])
 
   return (
     <div className='flex'>
       <Sidebar/>
-      <UsersTable usersList={users} />
+      <UsersTable loading={loading} usersList={users} setRunQuery={setRunQuery}/>
+      <ToastContainer position='bottom-center' autoClose={5000} />
     </div>
   )
 }
 
-const UsersTable = ({ usersList }) => {
+const UsersTable = ({ loading, usersList, setRunQuery }) => {
 
   const [search, setSearch] = useState('')
   const [filterU, setFilterU] = useState(usersList)
@@ -95,32 +77,36 @@ const UsersTable = ({ usersList }) => {
           Add User
         </button>
       </div>
-      <table className='w-11/12 mt-12 mb-12 text-lg text-left'>
-        <thead className='bg-indigo-500 bg-opacity-100 text-white'>
-          <tr>
-            <th className='py-3 px-6 select-none'> Name </th>
-            <th className='py-3 px-6 select-none'> Lastname </th>
-            <th className='py-3 px-6 select-none'> ID Card </th>
-            <th className='py-3 px-6 select-none'> Role </th>
-            <th className='py-3 px-6 select-none'> User </th>
-            <th className='py-3 px-6 select-none'> Password </th>
-            <th className='py-3 px-6 select-none'> Action </th>
-          </tr>
-        </thead>
-        <tbody>
-          {filterU.map((user) => {
-            return (
-              <UserRow key={nanoid()} user={user}/>
-            )
-          })}
-        </tbody>
-      </table>
+      {loading ? (
+        <ReactLoading type='spokes' color='#6366f1' height={667} width={375} />
+      ) : (
+        <table className='w-11/12 mt-12 mb-12 text-lg text-left'>
+          <thead className='bg-indigo-500 bg-opacity-100 text-white'>
+            <tr>
+              <th className='py-3 px-6 select-none'> Name </th>
+              <th className='py-3 px-6 select-none'> Lastname </th>
+              <th className='py-3 px-6 select-none'> ID Card </th>
+              <th className='py-3 px-6 select-none'> Role </th>
+              <th className='py-3 px-6 select-none'> User </th>
+              <th className='py-3 px-6 select-none'> Password </th>
+              <th className='py-3 px-6 select-none'> Action </th>
+            </tr>
+          </thead>
+          <tbody>
+            {filterU.map((user) => {
+              return (
+                <UserRow key={nanoid()} user={user} setRunQuery={setRunQuery}/>
+              )
+            })}
+          </tbody>
+        </table>
+      )}
       <Modal stt={openModal} changeState={setOpenModal}/>
     </div>
   )
 }
 
-const UserRow = ({user}) => {
+const UserRow = ({user, setRunQuery}) => {
 
   const [edit, setEdit] = useState(false)
   const [openDialog, setOpenDialog] = useState(false)
@@ -132,6 +118,40 @@ const UserRow = ({user}) => {
     user: user.user,
     password: user.password,
   })
+
+  const updateUser = async () =>{
+    await editUser(
+      user._id,
+      userInformation,
+      (response) => {
+        console.log(response.data);
+        toast.success('User modified successfully');
+        setEdit(false);
+        setRunQuery(true);
+      },
+      (error) => {
+        console.error(error);
+        toast.error('Error modifying user');
+      },
+    )
+  }
+
+  const eraseUser = async () => {
+    await deleteUser(
+      user._id,
+      userInformation,
+      (response) => {
+        console.log(response.data);
+        toast.success('User deleted successfully');
+        setEdit(false);
+        setRunQuery(true);
+      },
+      (error) => {
+        console.error(error);
+        toast.error('Error deleting user');
+      },
+    )
+  }
 
   return (
     <tr className='border-b hover:bg-gray-100'>
@@ -203,7 +223,7 @@ const UserRow = ({user}) => {
             <>
               <Tooltip title='Confirm edition' arrow>
                 <FontAwesomeIcon icon={faCheck} 
-                  onClick={() => setEdit(!edit)}
+                  onClick={() => updateUser()}
                   className='text-green-600 hover:text-green-500'
                 />
               </Tooltip>
@@ -236,7 +256,7 @@ const UserRow = ({user}) => {
               Are you sure you want to remove the user?
             </h1>
             <div className='flex w-full items-center justify-center my-4'>
-              <button onClick={() => setOpenDialog(false)} className='mx-2 px-4 py-2 bg-green-500 text-white hover:bg-green-700 rounded-md shadow-md'>
+              <button onClick={() => eraseUser()} className='mx-2 px-4 py-2 bg-green-500 text-white hover:bg-green-700 rounded-md shadow-md'>
                 Sí
               </button>
               <button onClick={() => setOpenDialog(false)} className='mx-2 px-4 py-2 bg-red-500 text-white hover:bg-red-700 rounded-md shadow-md'>
@@ -300,5 +320,6 @@ const Modal = ({ stt, changeState }) => {
     </div>
   )
 }
+
 
 export default Admin
