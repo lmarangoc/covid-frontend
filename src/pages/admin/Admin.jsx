@@ -1,14 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import Sidebar from './Sidebar'
-//import { nanoid } from 'nanoid'
-//import ReactLoading from 'react-loading'
-import { Dialog, Tooltip } from '@material-ui/core'
 import { ToastContainer, toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
-//import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { getUsers, createUser, editUser, deleteUser } from '../../utils/api'
-//import { faCheck, faBan, faPencilAlt, faTrash, faXmark } from '@fortawesome/free-solid-svg-icons'
-import { faExternalLinkSquareAlt } from '@fortawesome/free-solid-svg-icons'
+import 'react-toastify/dist/ReactToastify.css'
 
 const Admin = () => {
 
@@ -30,27 +24,41 @@ const Admin = () => {
         }
       )
     }
-    fetchUsers()
+      fetchUsers()
   }, [])
 
   return (
     <div className='flex'>
-      <Sidebar/>
-      <UsersTable loading={loading} usersList={users}/>
+      <div className='flex justify-center items-center'>
+        <Sidebar/>
+        <UsersTable loading={loading} usersList={users}/>
+      </div>
       <ToastContainer position='bottom-center' autoClose={5000} />
     </div>
   )
 }
 
-const UsersTable = () => {
-  
+const UsersTable = ({loading, usersList}) => {
+
+  const [search, setSearch] = useState('')
+  const [filterU, setFilterU] = useState(usersList)
+  //const [openModal, setOpenModal] = useState(false)
+
+  useEffect(() => {
+    setFilterU(
+      usersList.filter((elemento) => 
+        JSON.stringify(elemento).toLowerCase().includes(search.toLowerCase()),
+      )
+    )
+  }, [search, usersList])
+
   return (
-    <div>
-      Hola
+    <div className='min-w-max h-full flex justify-center items-center'>
+      <div className='flex justify-center items-center'>
+        Hola
+      </div>
     </div>
   )
 }
-
-
 
 export default Admin
