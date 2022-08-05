@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import Control from '../../media/control.png'
-import Logo from '../../media/logo.png'
+import Control from 'media/control.png'
+import Logo from 'media/logo.png'
 import { Link } from "react-router-dom"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserDoctor, faMagnifyingGlassLocation, faMapLocation, faArrowRightFromBracket} from '@fortawesome/free-solid-svg-icons'
