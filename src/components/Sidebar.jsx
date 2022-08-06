@@ -30,9 +30,9 @@ const Sidebar = ({ menus }) => {
         {menus.map((menu, index) => (
           <Link to={menu.route} key={nanoid()}>
             <li
-            key={index}
             className={`flex rounded-md p-2 hover:bg-light-white text-gray-100 text-sm items-center gap-x-4 
-            ${menu.gap ? "mt-12" : "mt-5"} ${ index === 0 && "bg-light-white"}`}
+            ${menu.gap ? "mt-12" : "mt-5"} 
+            ${ index === 0 && "bg-light-white"}`}
             > 
               <i className={`${menu.icon}`}/>
               <span className={`${!open && "hidden"} origin-left duration-200 select-none`}>
