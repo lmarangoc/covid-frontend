@@ -111,7 +111,6 @@ const UsersTable = ({loading, usersList, setAddAUser, setRunQuery}) => {
             })}
           </tbody>
         </table>
-        
       )}
       <Modal stt={openModal} changeState={setOpenModal} usersList={usersList} setAddAUser={setAddAUser}/>
     </div>
