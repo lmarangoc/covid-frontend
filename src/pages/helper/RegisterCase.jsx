@@ -18,21 +18,21 @@ const RegisterCase = () => {
         <form className='w-full mt-5 mb-5'>
           <div className='flex flex-wrap -mx-3 mb-6'>
             <div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
-              <label className='text-gray-700 font-semibold mb-2' for='name'>Name</label>
+              <label className='text-gray-700 font-semibold mb-2 select-none' for='name'>Name</label>
               <input type="text" name='name' required className='w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500'/>
             </div>
             <div className='w-full md:w-1/2 px-3'>
-              <label className='text-gray-700 font-semibold mb-2' for='lastname'>Lastname</label>
+              <label className='text-gray-700 font-semibold mb-2 select-none' for='lastname'>Lastname</label>
               <input type="text" name='lastname' required className='w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500'/>
             </div>
           </div>
           <div className='flex flex-wrap -mx-3 mb-6'>
             <div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
-              <label className='text-gray-700 font-semibold mb-2' for='idcard'>ID Card</label>
+              <label className='text-gray-700 font-semibold mb-2 select-none' for='idcard'>ID Card</label>
               <input type="number" name='idcard' required className='w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500'/>
             </div>
             <div className='w-full md:w-1/2 px-3'>
-              <label className='text-gray-700 font-semibold mb-2' for='sex'>Sex</label>
+              <label className='text-gray-700 font-semibold mb-2 select-none' for='sex'>Sex</label>
               <div className='mt-1'>
                 <select name="sex" required defaultValue={0} className='w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500'>
                   <option disabled value={0}>Select the sex</option>
@@ -44,21 +44,21 @@ const RegisterCase = () => {
           </div>
           <div className='flex flex-wrap -mx-3 mb-6'>
             <div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
-              <label className='text-gray-700 font-semibold mb-2' for='birth'>Date of birth</label>
+              <label className='text-gray-700 font-semibold mb-2 select-none' for='birth'>Date of birth</label>
               <input type="date" name='birth' required className='w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500'/>
             </div>
             <div className='w-full md:w-1/2 px-3'>
-              <label className='text-gray-700 font-semibold mb-2' for='residence'>Residence address</label>
+              <label className='text-gray-700 font-semibold mb-2 select-none' for='residence'>Residence address</label>
               <input type="text" name='residence' required className='w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500'/>
             </div>
           </div>
           <div className='flex flex-wrap -mx-3 mb-6'>
             <div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
-              <label className='text-gray-700 font-semibold mb-2' for='work'>Work address</label>
+              <label className='text-gray-700 font-semibold mb-2 select-none' for='work'>Work address</label>
               <input type="text" name='work' required className='w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500'/>
             </div>
             <div className='w-full md:w-1/2 px-3'>
-              <label className='text-gray-700 font-semibold mb-2' for='result'>Test result</label>
+              <label className='text-gray-700 font-semibold mb-2 select-none' for='result'>Test result</label>
               <div className='mt-1'>
                 <select name="result" required defaultValue={0} className='w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500'>
                   <option disabled value={0}>Select the result</option>
@@ -70,7 +70,7 @@ const RegisterCase = () => {
           </div>
           <div className='flex flex-wrap -mx-3 mb-6'>
             <div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
-              <label className='text-gray-700 font-semibold mb-2' for='exam'>Exam date</label>
+              <label className='text-gray-700 font-semibold mb-2 select-none' for='exam'>Exam date</label>
               <input type="date" name='exam' required className='w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500'/>
             </div>
             <div className='w-full md:w-1/2 px-3'>
