@@ -54,8 +54,8 @@ const RegisterCase = () => {
           </div>
           <div className='flex flex-wrap -mx-3 mb-6'>
             <div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
-              <label className='text-gray-700 font-semibold mb-2 select-none' for='work'>Work address</label>
-              <input type="text" name='work' required className='w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500'/>
+              <label className='text-gray-700 font-semibold mb-2 select-none' for='job'>Job address</label>
+              <input type="text" name='job' required className='w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500'/>
             </div>
             <div className='w-full md:w-1/2 px-3'>
               <label className='text-gray-700 font-semibold mb-2 select-none' for='result'>Test result</label>
