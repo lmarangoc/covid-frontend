@@ -330,26 +330,26 @@ const Modal = ({ stt, changeState, usersList, setAddAUser }) => {
           <form ref={form} onSubmit={submitForm}>
             <div className='p-6'>
               <div className='border-b border-gray-400 pb-2 mb-3'>
-                <input type="text" className='appearance-none bg-transparent border-none w-full text-gray-900 mr-3 py-1 px-2 leading-tight focus:outline-none' placeholder="Name" name="name" required />
+                <input type="text" className='bg-transparent border-none w-full text-gray-900 mr-3 border-transparent focus:border-transparent focus:ring-0' placeholder="Name" name="name" required />
               </div>
               <div className='border-b border-gray-400 py-2 mb-3'>
-                <input type="text" className='appearance-none bg-transparent border-none w-full text-gray-900 mr-3 py-1 px-2 leading-tight focus:outline-none' placeholder="Lastname" name="lastname" required />
+                <input type="text" className='bg-transparent border-none w-full text-gray-900 mr-3 border-transparent focus:border-transparent focus:ring-0' placeholder="Lastname" name="lastname" required />
               </div>
               <div className='border-b border-gray-400 py-2 mb-3'>
-                <input type="text" className='appearance-none bg-transparent border-none w-full text-gray-900 mr-3 py-1 px-2 leading-tight focus:outline-none' placeholder="ID Card" name="idcard" required />
+                <input type="text" className='bg-transparent border-none w-full text-gray-900 mr-3 border-transparent focus:border-transparent focus:ring-0' placeholder="ID Card" name="idcard" required />
               </div>
               <div className='border-b border-gray-400 py-2 mb-3'>
-                <select className='w-full focus:outline-none text-gray-900 mr-3 py-1 pl-1 pr-2 leading-tight' name="role" required defaultValue={0}>
+                <select className='w-full border-transparent focus:border-transparent focus:ring-0 text-gray-900 mr-3' name="role" required defaultValue={0}>
                   <option disabled value={0}> Select a role </option>
                   <option> doctor </option>
                   <option> helper </option>
                 </select>
               </div>
               <div className='border-b border-gray-400 py-2 mb-3'>
-                <input type="text" className='appearance-none bg-transparent border-none w-full text-gray-900 mr-3 py-1 px-2 leading-tight focus:outline-none' placeholder="Username" name="user" required />
+                <input type="text" className='bg-transparent border-none w-full text-gray-900 mr-3 border-transparent focus:border-transparent focus:ring-0' placeholder="Username" name="user" required />
               </div>
               <div className='border-b border-gray-400 py-2 mb-8'>
-                <input type="password" className='appearance-none bg-transparent border-none w-full text-gray-900 mr-3 py-1 px-2 leading-tight focus:outline-none' placeholder="Password" name="password" required />
+                <input type="password" className='bg-transparent border-none w-full text-gray-900 mr-3 border-transparent focus:border-transparent focus:ring-0' placeholder="Password" name="password" required />
               </div>
               <button type='submit' 
               className='bg-indigo-700 text-white w-full px-4 py-2 rounded hover:bg-indigo-500 select-none'> 
