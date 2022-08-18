@@ -7,7 +7,6 @@ import Doctor from 'pages/doctor/Doctor';
 import SearchCase from 'pages/doctor/SearchCase';
 import CaseMap from 'pages/doctor/CaseMap';
 import Helper from 'pages/helper/Helper';
-import ManageCase from 'pages/helper/ManageCase';
 import RegisterCase from 'pages/helper/RegisterCase';
 import NotFound from "pages/NotFound";
 
@@ -23,7 +22,6 @@ const App = () => {
           <Route path="/doctor/searchcase" element={<SearchCase />} />
           <Route path="/doctor/casemap" element={<CaseMap />} />
           <Route path="/helper" element={<Helper />} />
-          <Route path="/helper/managecase" element={<ManageCase />} />
           <Route path="/helper/registercase" element={<RegisterCase />} />
           <Route path="*" element={<NotFound />} />
         </Routes> 
