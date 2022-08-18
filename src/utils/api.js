@@ -50,7 +50,7 @@ export const deleteUser = async (id, successCallback, errorCallback) => {
 export const getCases = async (successCallback, errorCallback) => {
   const options = {
     method: "GET",
-    url: "http://localhost:5000/helper/managecase/",
+    url: "http://localhost:5000/helper/",
   };
   await axios.request(options).then(successCallback).catch(errorCallback);
 };
@@ -58,7 +58,7 @@ export const getCases = async (successCallback, errorCallback) => {
 export const getCaseData = async (successCallback, errorCallback) => {
   const options = {
     method: "GET",
-    url: "http://localhost:5000/helper/managecase/self",
+    url: "http://localhost:5000/helper/self",
   };
   await axios.request(options).then(successCallback).catch(errorCallback);
 };
@@ -76,7 +76,7 @@ export const createCase = async (data, successCallback, errorCallback) => {
 export const editCase = async (id, data, successCallback, errorCallback) => {
   const options = {
     method: "PATCH",
-    url: `http://localhost:5000/helper/managecase/${id}/`,
+    url: `http://localhost:5000/helper/${id}/`,
     headers: { "Content-Type": "application/json" },
     data,
   };
@@ -86,7 +86,7 @@ export const editCase = async (id, data, successCallback, errorCallback) => {
 export const deleteCase = async (id, successCallback, errorCallback) => {
   const options = {
     method: "DELETE",
-    url: `http://localhost:5000/helper/managecase/${id}/`,
+    url: `http://localhost:5000/helper/${id}/`,
     headers: { "Content-Type": "application/json" },
   };
   await axios.request(options).then(successCallback).catch(errorCallback);
