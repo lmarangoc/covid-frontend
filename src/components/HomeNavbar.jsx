@@ -26,7 +26,7 @@ const HomeNavbar = () => {
         </div>
         <ul className={`md:flex md:items-center md:pb-0 pb-12 absolute md:static bg-indigo-500 md:z-auto z-[-1] left-0 w-full md:w-auto md:pl-0 pl-9 transition-all duration-500 ease-in ${open ? 'top-20' : 'top-[-490px]'}`}>
           {menus.map((menu) => (
-            <Link to={menu.route} key={nanoid()} className='text-gray-100 hover:text-white'>
+            <Link to={menu.route} key={nanoid()} className='text-white hover:text-gray-300'>
               <li className='md:ml-8 text-lg select-none md:my-0 my-7'>
                 {menu.title}
               </li>
@@ -34,7 +34,7 @@ const HomeNavbar = () => {
           )
           )}
           <Link to="/login">
-            <button className='bg-gray-100 text-indigo-500 hover:bg-white py-2 px-6 rounded md:ml-8 select-none'>
+            <button className='bg-white text-indigo-500 py-2 px-6 rounded hover:rounded-full md:ml-8 select-none'>
               Sign In
             </button>
           </Link>
