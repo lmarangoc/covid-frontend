@@ -1,6 +1,6 @@
-import React, { useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Sidebar from 'components/Sidebar'
-import { createCase } from 'utils/api'
+import { createCase, getCases } from 'utils/api'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
@@ -12,6 +12,33 @@ const RegisterCase = () => {
     { title: "Manage Case", icon: "fa-solid fa-bars-progress fa-2x", route: '/helper/managecase' },
     { title: "Log Out", icon: "fa-solid fa-arrow-right-from-bracket fa-2x", route: "/", gap: true },
   ]
+
+  const [cases, setCases] = useState([])
+  const [runQuery, setRunQuery] = useState(false)
+
+  useEffect(() => {
+    const fetchCases = async () => {
+      await getCases(
+        (response) => {
+          console.log('users', response.data);
+          setCases(response.data)
+          setRunQuery(false)
+        },
+        (error) => {
+          console.log(error)
+        }
+      )
+    }
+    if (runQuery) {
+      fetchCases()
+      setRunQuery(true)
+    }
+  }, [runQuery])
+
+  useEffect(() => {
+    setRunQuery(true)
+  }, [])
+    
 
   const form = useRef(null)
 
@@ -35,6 +62,7 @@ const RegisterCase = () => {
         job: newCase.job,
         test_result: newCase.test_result,
         test_date: newCase.test_date,
+        caseid : cases.length + 1,
       },
       (response) => {
         console.log(response.data);
