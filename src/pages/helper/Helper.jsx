@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import Navbar from 'components/Navbar'
 import { getCases } from 'utils/api'
 import { nanoid } from 'nanoid'
+import { BsPencil } from 'react-icons/bs'
+import { Tooltip } from '@material-ui/core'
 
 const Helper = () => {
 
@@ -14,6 +16,7 @@ const Helper = () => {
   const [runQuery, setRunQuery] = useState(false)
   const [search, setSearch] = useState('')
   const [filterC, setFilterC] = useState(cases)
+  const [showCard, setShowCard] = useState(true)
 
   useEffect(() => {
     const fetchCases = async () => {
@@ -35,8 +38,10 @@ const Helper = () => {
   }, [runQuery])
 
   useEffect(() => {
-    setRunQuery(true)
-  }, [])
+    if (showCard) {
+      setRunQuery(true)
+    }
+  }, [showCard])
 
   useEffect(() => {
     setFilterC(
@@ -63,9 +68,16 @@ const Helper = () => {
           return (
             <div key={nanoid()} className='p-4 sm:w-1/2 lg:w-1/3 hover:scale-105'>
               <div className='h-full border border-gray-200 rounded-lg overflow-hidden'>
-                <p className='text-lg font-semibold text-gray-900 px-4 pt-2 select-none'> 
+                <div className='flex flex-row justify-between'>
+                  <p className='text-lg font-semibold text-gray-900 pl-4 pt-2 select-none'> 
                   {cases.name + " " + cases.lastname} 
-                </p>
+                  </p>
+                  <Tooltip title='Edit Case' arrow>
+                    <div>
+                      <BsPencil size={35} onClick={() => setShowCard(!showCard)} className='pr-4 pt-1 text-blue-700 hover:text-blue-500'/> 
+                    </div>
+                  </Tooltip>
+                </div>
                 <p className='px-4 select-none'>
                   {cases.test_result + " " + cases.test_date }
                 </p>
