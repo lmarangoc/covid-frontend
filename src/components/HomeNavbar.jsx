@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Link } from "react-router-dom"
 import { nanoid } from 'nanoid'
 import { IoMedicalOutline } from 'react-icons/io5'
+import { AiOutlineMenu } from 'react-icons/ai'
 
 const HomeNavbar = () => {
 
@@ -22,8 +23,8 @@ const HomeNavbar = () => {
             </span>
           </div>
         </Link>
-        <div onClick={() => setOpen(!open)} className='text-3xl absolute right-8 top-4 cursor-pointer md:hidden text-white'>
-          <ion-icon name={ open ? 'close' : 'menu' }></ion-icon>
+        <div onClick={() => setOpen(!open)} className='absolute right-8 top-4 cursor-pointer md:hidden text-white'>
+          <AiOutlineMenu size={30} className={` ${open ? 'close' : 'menu'}$`} />
         </div>
         <ul className={`md:flex md:items-center md:pb-0 pb-12 absolute md:static bg-indigo-500 md:z-auto z-[-1] left-0 w-full md:w-auto md:pl-0 pl-9 transition-all duration-500 ease-in ${open ? 'top-20' : 'top-[-490px]'}`}>
           {menus.map((menu) => (
