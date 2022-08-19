@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from "react-router-dom"
 import { nanoid } from 'nanoid'
+import { IoMedicalOutline } from 'react-icons/io5'
 
 const HomeNavbar = () => {
 
@@ -14,8 +15,8 @@ const HomeNavbar = () => {
     <div className='shadow-md w-full fixed top-0 left-0'>
       <div className='md:flex items-center justify-between bg-indigo-500 py-4 md:px-10 px-7'>
         <Link to='/'>
-          <div className='font-bold text-3xl text-white flex items-center'>
-            <ion-icon name="medical-outline"></ion-icon>
+          <div className='font-bold text-white flex items-center'>
+            <IoMedicalOutline size={30}/>
             <span className='text-2xl mx-1 select-none'>
               COVID-19 Tracker
             </span>
