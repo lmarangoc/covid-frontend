@@ -3,7 +3,8 @@ import Navbar from 'components/Navbar'
 import { getCases, editCase } from 'utils/api'
 import { nanoid } from 'nanoid'
 import { BsPencil } from 'react-icons/bs'
-import { Tooltip } from '@material-ui/core'
+import { IoCloseOutline } from 'react-icons/io5'
+import { Tooltip, Dialog } from '@material-ui/core'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
@@ -14,9 +15,11 @@ const Helper = () => {
     { title: "Register Case", route: '/helper/registercase' },
   ]
 
-  const [showCard, setShowCard] = useState(true)
   const [cases, setCases] = useState([])
   const [runQuery, setRunQuery] = useState(false)
+  const [search, setSearch] = useState('')
+  const [filterC, setFilterC] = useState(cases)
+  const [edit, setEdit] = useState(false)
 
   useEffect(() => {
     const fetchCases = async () => {
@@ -33,41 +36,13 @@ const Helper = () => {
     }
     if (runQuery) {
       fetchCases()
+      setRunQuery(true)
     }
   }, [runQuery])
 
   useEffect(() => {
-    if (showCard) {
-      setRunQuery(true)
-    }
-  }, [showCard])
-
-  return (
-    <div className='w-full h-full'>
-      <Navbar menus={Menus}/>
-      {showCard ? (<Card cases={cases} showCard={showCard} setShowCard={setShowCard}/>) : (<EditCase cases={cases} setRunQuery={setRunQuery}/>)}
-      <ToastContainer position="bottom-center" autoClose={5000}
-/>
-    </div>
-  )
-}
-
-const Card = ({cases, showCard, setShowCard}) => {
-
-  const [search, setSearch] = useState('')
-  const [filterC, setFilterC] = useState(cases)
-  const [edit, setEdit] = useState(false)
-  const [caseInformation, setCaseInformation] = useState({
-    name: cases.name,
-    lastname: cases.name,
-    idcard: cases.idcard,
-    sex: cases.sex,
-    birth: cases.birth,
-    residence: cases.residence,
-    job: cases.job,
-    test_result: cases.test_result,
-    test_date: cases.test_date,
-  })
+    setRunQuery(true)
+  }, [])
 
   useEffect(() => {
     setFilterC(
@@ -78,12 +53,8 @@ const Card = ({cases, showCard, setShowCard}) => {
   }, [search, cases])
 
   return (
-    <>
-    {edit ? (
-      <div className='flex flex-col items-start pt-24 px-10 pb-3 flex-1 h-screen'>
-        <p className='text-2xl font-semibold select-none'> Register new case </p>
-      </div>
-    ) : (
+    <div className='w-full h-full'>
+      <Navbar menus={Menus}/>
       <div>
         <div className='flex items-center justify-center pt-28'>
           <input 
@@ -105,7 +76,7 @@ const Card = ({cases, showCard, setShowCard}) => {
                     </p>
                     <Tooltip title='Edit Case' arrow>
                       <div>
-                        <BsPencil size={35} onClick={() => setEdit(!edit)} className='pr-4 pt-1 text-blue-700 hover:text-blue-500 cursor-pointer'/> 
+                        <BsPencil size={35} onClick={() => setEdit((c) => !c)} className='pr-4 pt-1 text-blue-700 hover:text-blue-500 cursor-pointer'/> 
                       </div>
                     </Tooltip>
                   </div>
@@ -130,14 +101,14 @@ const Card = ({cases, showCard, setShowCard}) => {
           })} 
         </div>
       </div>
-    )}
-    </>
-  )  
+      <ToastContainer position="bottom-center" autoClose={5000}/>
+      <Modal edit={edit} setEdit={setEdit} cases={cases} setRunQuery={setRunQuery}/>
+    </div>
+  )
 }
 
-const EditCase = ({cases, setRunQuery}) => {
+const Modal = ({edit, setEdit, cases, setRunQuery}) => {
 
-  const [edit, setEdit] = useState(false)
   const [caseInformation, setCaseInformation] = useState({
     name: cases.name,
     lastname: cases.name,
@@ -150,7 +121,7 @@ const EditCase = ({cases, setRunQuery}) => {
     test_date: cases.test_date,
   })
 
-  const updateUser = async () =>{
+  const updateCase = async () =>{
     await editCase(
       cases._id,
       caseInformation,
@@ -169,9 +140,42 @@ const EditCase = ({cases, setRunQuery}) => {
 
   return (
     <div>
-      <div className='flex items-center justify-center pt-28'>
-        Hola
-      </div>
+      <Dialog open={edit}>
+        <div className='w-full h-full'>
+          <div className='flex justify-between items-start p-3 border-b'>
+            <h1 className='text-3xl font-base select-none text-gray-800'> Edit case </h1>
+            <button onClick={() => setEdit(false)}>
+              <IoCloseOutline  className='w-10 h-10 p-1 text-gray-400 hover:bg-gray-200 rounded-lg'/>
+            </button>
+          </div>
+          <div className='w-full p-6'>
+            <div className='flex flex-wrap -mx-3 mb-6'>
+              <div className='w-full h-full md:w-1/2 px-3 mb-6 md:mb-0'>
+                <label className='text-gray-700 font-semibold mb-2 select-none' htmlFor="name">
+                  Name
+                </label>
+                <input 
+                  type="text" 
+                  value={caseInformation.name} 
+                  onChange={e => setCaseInformation({...caseInformation, name:e.target.value})} 
+                  className='w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500'
+                />
+              </div>
+              <div className='w-full md:w-1/2 px-3'>
+                <label className='text-gray-700 font-semibold mb-2 select-none' htmlFor='lastname'>
+                  Lastname
+                </label>
+                <input 
+                  type="text" 
+                  value={caseInformation.lastname} 
+                  onChange={e => setCaseInformation({...caseInformation, lastname:e.target.value})} 
+                  className='w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500'
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </Dialog>
     </div>
   )
 }
