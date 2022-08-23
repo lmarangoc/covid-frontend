@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import Sidebar from 'components/Sidebar'
+import Navbar from 'components/Navbar'
 import { createCase, getCases } from 'utils/api'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -7,10 +7,8 @@ import 'react-toastify/dist/ReactToastify.css'
 const RegisterCase = () => {
 
   const Menus = [
-    { title: "Helper", icon: "fa-solid fa-user fa-2x", route: '/helper' },
-    { title: "Register Case", icon: "fa-solid fa-user-plus fa-2x", route: '/helper/registercase', gap: true },
-    { title: "Manage Case", icon: "fa-solid fa-bars-progress fa-2x", route: '/helper/managecase' },
-    { title: "Log Out", icon: "fa-solid fa-arrow-right-from-bracket fa-2x", route: "/", gap: true },
+    { title: "Helper", route: '/helper' },
+    { title: "Register Case", route: '/helper/registercase' },
   ]
 
   const [cases, setCases] = useState([])
@@ -38,7 +36,6 @@ const RegisterCase = () => {
   useEffect(() => {
     setRunQuery(true)
   }, [])
-    
 
   const form = useRef(null)
 
@@ -62,6 +59,7 @@ const RegisterCase = () => {
         job: newCase.job,
         test_result: newCase.test_result,
         test_date: newCase.test_date,
+        state: newCase.state,
         caseid : cases.length + 1,
       },
       (response) => {
@@ -76,12 +74,12 @@ const RegisterCase = () => {
   }
 
   return (
-    <div className='flex'>
-      <Sidebar menus={Menus}/>
-      <div className='flex flex-col items-start px-10 py-7 flex-1 h-screen'>
+    <div>
+      <Navbar menus={Menus}/>
+      <div className='flex flex-col items-start pt-20 px-10'>
         <p className='text-2xl font-semibold select-none'> Register new case </p>
         <form ref={form} onSubmit={submitForm} className='w-full mt-5 mb-5'>
-          <div className='flex flex-wrap -mx-3 mb-6'>
+          <div className='flex flex-wrap -mx-3 mb-4'>
             <div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
               <label className='text-gray-700 font-semibold mb-2 select-none' htmlFor='name'>Name</label>
               <input type="text" name='name' required className='w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500'/>
@@ -91,7 +89,7 @@ const RegisterCase = () => {
               <input type="text" name='lastname' required className='w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500'/>
             </div>
           </div>
-          <div className='flex flex-wrap -mx-3 mb-6'>
+          <div className='flex flex-wrap -mx-3 mb-4'>
             <div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
               <label className='text-gray-700 font-semibold mb-2 select-none' htmlFor='idcard'>ID Card</label>
               <input type="number" name='idcard' required className='w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500'/>
@@ -107,7 +105,7 @@ const RegisterCase = () => {
               </div>
             </div>
           </div>
-          <div className='flex flex-wrap -mx-3 mb-6'>
+          <div className='flex flex-wrap -mx-3 mb-4'>
             <div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
               <label className='text-gray-700 font-semibold mb-2 select-none' htmlFor='birth'>Date of birth</label>
               <input type="date" name='birth' required className='w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500'/>
@@ -117,7 +115,7 @@ const RegisterCase = () => {
               <input type="text" name='residence' required className='w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500'/>
             </div>
           </div>
-          <div className='flex flex-wrap -mx-3 mb-6'>
+          <div className='flex flex-wrap -mx-3 mb-4'>
             <div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
               <label className='text-gray-700 font-semibold mb-2 select-none' htmlFor='job'>Job address</label>
               <input type="text" name='job' required className='w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500'/>
@@ -133,13 +131,29 @@ const RegisterCase = () => {
               </div>
             </div>
           </div>
-          <div className='flex flex-wrap -mx-3 mb-6'>
+          <div className='flex flex-wrap -mx-3 mb-2'>
             <div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
               <label className='text-gray-700 font-semibold mb-2 select-none' htmlFor='test_date'>Exam date</label>
               <input type="date" name='test_date' required className='w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500'/>
             </div>
             <div className='w-full md:w-1/2 px-3'>
-              <button type='submit'className='bg-indigo-500 text-white w-full mt-6 px-4 py-2 rounded hover:rounded-full select-none'>
+              <label className='text-gray-700 font-semibold mb-2 select-none' htmlFor='state'>Case state</label>
+              <div className='mt-1'>
+                <select name="state" required defaultValue={0} className='w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500'>
+                  <option disabled value={0}>Select the state</option>
+                  <option>Does not apply</option>
+                  <option>Home treatment</option>
+                  <option>Hospital treatment</option>
+                  <option>ICU</option>
+                  <option>Cured</option>
+                  <option>Dead</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div className='flex flex-wrap -mx-3'>
+            <div className='w-full md:w-1/2 px-3 mb-3 md:mb-0'>
+              <button type='submit'className='bg-indigo-500 text-white w-full mt-4 px-4 py-2 rounded hover:rounded-full select-none'>
                 Save Case
               </button>
             </div>
