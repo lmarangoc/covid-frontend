@@ -119,6 +119,10 @@ const Modal = ({edit, setEdit, cases, setRunQuery}) => {
     job: cases.job,
     test_result: cases.test_result,
     test_date: cases.test_date,
+    states: {
+      state: cases.state,
+      update_date: cases.update_date,
+    },
   })
 
   const updateCase = async () =>{
@@ -171,6 +175,103 @@ const Modal = ({edit, setEdit, cases, setRunQuery}) => {
                   onChange={e => setCaseInformation({...caseInformation, lastname:e.target.value})} 
                   className='w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500'
                 />
+              </div>
+            </div>
+            <div className='flex flex-wrap -mx-3 mb-6'>
+              <div className='w-full h-full md:w-1/2 px-3 mb-6 md:mb-0'>
+                <label className='text-gray-700 font-semibold mb-2 select-none' htmlFor="idcard">
+                  ID Card
+                </label>
+                <input 
+                  type="text" 
+                  value={caseInformation.idcard} 
+                  onChange={e => setCaseInformation({...caseInformation, idcard:e.target.value})} 
+                  className='w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500'
+                />
+              </div>
+              <div className='w-full md:w-1/2 px-3'>
+                <label className='text-gray-700 font-semibold mb-2 select-none' htmlFor='sex'>
+                  Sex
+                </label>
+                <div className='mt-1'>
+                <select name="sex" 
+                  required 
+                  value={caseInformation.sex} 
+                  onChange={e => setCaseInformation({...caseInformation, sex:e.target.value})} className='w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500'
+                >
+                  <option disabled>Select the sex</option>
+                  <option>Men</option>
+                  <option>Woman</option>
+                </select>
+              </div>
+              </div>
+            </div>
+            <div className='flex flex-wrap -mx-3 mb-6'>
+              <div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
+                <label className='text-gray-700 font-semibold mb-2 select-none' htmlFor='birth'>Date of birth</label>
+                <input 
+                  type="date"
+                  value={caseInformation.birth} 
+                  onChange={e => setCaseInformation({...caseInformation, birth:e.target.value})}
+                  className='w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500'
+                />
+              </div>
+              <div className='w-full md:w-1/2 px-3'>
+                <label className='text-gray-700 font-semibold mb-2 select-none' htmlFor='residence'>Residence address</label>
+                <input 
+                  type="text"
+                  value={caseInformation.residence} 
+                  onChange={e => setCaseInformation({...caseInformation, residence:e.target.value})}
+                  className='w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500'
+                />
+              </div>          
+            </div>
+            <div className='flex flex-wrap -mx-3 mb-6'>
+              <div className='w-full h-full md:w-1/2 px-3 mb-6 md:mb-0'>
+                <label className='text-gray-700 font-semibold mb-2 select-none' htmlFor="job">
+                  Job Address
+                </label>
+                <input 
+                  type="text" 
+                  value={caseInformation.job} 
+                  onChange={e => setCaseInformation({...caseInformation, job:e.target.value})} 
+                  className='w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500'
+                />
+              </div>
+              <div className='w-full md:w-1/2 px-3'>
+                <label className='text-gray-700 font-semibold mb-2 select-none' htmlFor='test_result'>
+                  Test result
+                </label>
+                <div className='mt-1'>
+                  <select 
+                    name="test_result"
+                    value={caseInformation.test_result} 
+                    onChange={e => setCaseInformation({...caseInformation, test_result:e.target.value})}
+                    className='w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500'
+                  >
+                    <option disabled >Select the result</option>
+                    <option>Positive</option>
+                    <option>Negative</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div className='flex flex-wrap -mx-3 mb-6'>
+              <div className='w-full h-full md:w-1/2 px-3 mb-6 md:mb-0'>
+                <label className='text-gray-700 font-semibold mb-2 select-none' htmlFor="test_date">
+                  Test date
+                </label>
+                <input 
+                  type="date" 
+                  value={caseInformation.test_date} 
+                  onChange={e => setCaseInformation({...caseInformation, test_date:e.target.value})} 
+                  className='w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500'
+                />
+              </div>
+              <div className='w-full md:w-1/2 px-3'>
+                <button className='bg-indigo-500 text-white w-full mt-4 px-4 py-2 rounded hover:rounded-full select-none'>
+                  Edit Case
+                </button>
               </div>
             </div>
           </div>
