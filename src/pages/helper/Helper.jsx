@@ -19,7 +19,7 @@ const Helper = () => {
   const [runQuery, setRunQuery] = useState(false)
   const [search, setSearch] = useState('')
   const [filterC, setFilterC] = useState(cases)
-  const [edit, setEdit] = useState(false)
+  const [openModal, setOpenModal] = useState(false)
 
   useEffect(() => {
     const fetchCases = async () => {
@@ -68,50 +68,22 @@ const Helper = () => {
         <div className='flex flex-wrap px-8 py-5'>
           {filterC.map((cases) => {
             return (
-              <div key={nanoid()} className='p-4 sm:w-1/2 lg:w-1/3 hover:scale-105'>
-                <div className='h-full border border-gray-200 rounded-lg overflow-hidden'>
-                  <div className='flex flex-row justify-between'>
-                    <p className='text-lg font-semibold text-gray-900 pl-4 pt-2 select-none'> 
-                    {cases.name + " " + cases.lastname} 
-                    </p>
-                    <Tooltip title='Edit Case' arrow>
-                      <div>
-                        <BsPencil size={35} onClick={() => setEdit((c) => !c)} className='pr-4 pt-1 text-blue-700 hover:text-blue-500 cursor-pointer'/> 
-                      </div>
-                    </Tooltip>
-                  </div>
-                  <p className='px-4 select-none'>
-                    {cases.test_result + " " + cases.test_date }
-                  </p>
-                  <p className='px-4 select-none'>
-                    {"ID Card: " + cases.idcard}
-                  </p>
-                  <p className='px-4 select-none'>
-                    {"Residence address: " + cases.residence}
-                  </p>
-                  <p className='px-4 select-none'>
-                    {"Job address: " + cases.job}
-                  </p>
-                  <p className='px-4 pb-3 select-none'> 
-                    {" Date of birth: " + cases.birth + " Sex: " + cases.sex}
-                  </p>
-                </div>
-              </div>
+              <CaseCard key={nanoid()} cases={cases} stt={openModal} changeState={setOpenModal} setRunQuery={setRunQuery}/>
             )
           })} 
         </div>
       </div>
       <ToastContainer position="bottom-center" autoClose={5000}/>
-      <Modal edit={edit} setEdit={setEdit} cases={cases} setRunQuery={setRunQuery}/>
     </div>
   )
 }
 
-const Modal = ({edit, setEdit, cases, setRunQuery}) => {
+const CaseCard = ({cases, stt, changeState, setRunQuery}) => {
 
   const [caseInformation, setCaseInformation] = useState({
+    _id: cases._id,
     name: cases.name,
-    lastname: cases.name,
+    lastname: cases.lastname,
     idcard: cases.idcard,
     sex: cases.sex,
     birth: cases.birth,
@@ -125,14 +97,64 @@ const Modal = ({edit, setEdit, cases, setRunQuery}) => {
     },
   })
 
+  return (
+    <div className='p-4 sm:w-1/2 lg:w-1/3 hover:scale-105'>
+      <div className='h-full border border-gray-200 rounded-lg overflow-hidden'>
+        <div className='flex flex-row justify-between'>
+          <p className='text-lg font-semibold text-gray-900 pl-4 pt-2 select-none'> 
+            {cases.name + " " + cases.lastname} 
+          </p>
+          <Tooltip title='Edit Case' arrow>
+            <div>
+              <BsPencil size={35} onClick={() => changeState((c) => !c)} className='pr-4 pt-1 text-blue-700 hover:text-blue-500 cursor-pointer'/> 
+            </div>
+          </Tooltip>
+        </div>
+        <p className='px-4 select-none'>
+          {cases.test_result + " " + cases.test_date }
+        </p>
+        <p className='px-4 select-none'>
+          {"ID Card: " + cases.idcard}
+        </p>
+        <p className='px-4 select-none'>
+          {"Residence address: " + cases.residence}
+        </p>
+        <p className='px-4 select-none'>
+          {"Job address: " + cases.job}
+        </p>
+        <p className='px-4 pb-3 select-none'> 
+          {" Date of birth: " + cases.birth + " Sex: " + cases.sex}
+        </p>
+      </div>
+      <Modal stt={stt} changeState={changeState} cases={cases} caseInformation={caseInformation} setCaseInformation={setCaseInformation} setRunQuery={setRunQuery}/>
+    </div>
+  )
+}
+
+const Modal = ({stt, changeState, cases, caseInformation, setCaseInformation, setRunQuery}) => {
+
   const updateCase = async () =>{
     await editCase(
       cases._id,
-      caseInformation,
+      {
+        name: caseInformation.name,
+        lastname: caseInformation.lastname,
+        idcard: caseInformation.idcard,
+        sex: caseInformation.sex,
+        birth: caseInformation.birth,
+        residence: caseInformation.residence,
+        job: caseInformation.job,
+        test_result: caseInformation.test_result,
+        test_date: caseInformation.test_date,
+        states: {
+          state: caseInformation.state,
+          update_date: caseInformation.update_date,
+        },
+      },
       (response) => {
         console.log(response.data);
         toast.success('Case modified successfully');
-        setEdit(false);
+        changeState(false);
         setRunQuery(true);
       },
       (error) => {
@@ -144,11 +166,11 @@ const Modal = ({edit, setEdit, cases, setRunQuery}) => {
 
   return (
     <div>
-      <Dialog open={edit}>
+      <Dialog open={stt}>
         <div className='w-full h-full'>
           <div className='flex justify-between items-start p-3 border-b'>
             <h1 className='text-3xl font-base select-none text-gray-800'> Edit case </h1>
-            <button onClick={() => setEdit(false)}>
+            <button onClick={() => changeState(false)}>
               <IoCloseOutline  className='w-10 h-10 p-1 text-gray-400 hover:bg-gray-200 rounded-lg'/>
             </button>
           </div>
@@ -159,8 +181,8 @@ const Modal = ({edit, setEdit, cases, setRunQuery}) => {
                   Name
                 </label>
                 <input 
-                  type="text" 
-                  value={caseInformation.name} 
+                  type="text"
+                  value={caseInformation.name}
                   onChange={e => setCaseInformation({...caseInformation, name:e.target.value})} 
                   className='w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500'
                 />
@@ -170,9 +192,9 @@ const Modal = ({edit, setEdit, cases, setRunQuery}) => {
                   Lastname
                 </label>
                 <input 
-                  type="text" 
+                  type="text"
                   value={caseInformation.lastname} 
-                  onChange={e => setCaseInformation({...caseInformation, lastname:e.target.value})} 
+                  onChange={e => setCaseInformation({...caseInformation, lastname:e.target.value})}
                   className='w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500'
                 />
               </div>
@@ -194,10 +216,12 @@ const Modal = ({edit, setEdit, cases, setRunQuery}) => {
                   Sex
                 </label>
                 <div className='mt-1'>
-                <select name="sex" 
-                  required 
+                <select
+                  name="sex"
                   value={caseInformation.sex} 
-                  onChange={e => setCaseInformation({...caseInformation, sex:e.target.value})} className='w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500'
+                  onChange={e => setCaseInformation({...caseInformation, sex:e.target.value})}
+                  required 
+                  className='w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500'
                 >
                   <option disabled>Select the sex</option>
                   <option>Men</option>
@@ -232,9 +256,9 @@ const Modal = ({edit, setEdit, cases, setRunQuery}) => {
                   Job Address
                 </label>
                 <input 
-                  type="text" 
+                  type="text"
                   value={caseInformation.job} 
-                  onChange={e => setCaseInformation({...caseInformation, job:e.target.value})} 
+                  onChange={e => setCaseInformation({...caseInformation, job:e.target.value})}  
                   className='w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500'
                 />
               </div>
@@ -246,7 +270,7 @@ const Modal = ({edit, setEdit, cases, setRunQuery}) => {
                   <select 
                     name="test_result"
                     value={caseInformation.test_result} 
-                    onChange={e => setCaseInformation({...caseInformation, test_result:e.target.value})}
+                    onChange={e => setCaseInformation({...caseInformation, test_result:e.target.value})} 
                     className='w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500'
                   >
                     <option disabled >Select the result</option>
@@ -262,14 +286,14 @@ const Modal = ({edit, setEdit, cases, setRunQuery}) => {
                   Test date
                 </label>
                 <input 
-                  type="date" 
+                  type="date"
                   value={caseInformation.test_date} 
                   onChange={e => setCaseInformation({...caseInformation, test_date:e.target.value})} 
                   className='w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500'
                 />
               </div>
               <div className='w-full md:w-1/2 px-3'>
-                <button className='bg-indigo-500 text-white w-full mt-4 px-4 py-2 rounded hover:rounded-full select-none'>
+                <button onClick={() => updateCase()} className='bg-indigo-500 text-white w-full mt-4 px-4 py-2 rounded hover:rounded-full select-none'>
                   Edit Case
                 </button>
               </div>
