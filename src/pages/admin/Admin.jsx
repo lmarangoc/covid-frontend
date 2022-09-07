@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import Sidebar from 'components/Sidebar'
+import Navbar from 'components/Navbar'
 import { nanoid } from 'nanoid'
 import ReactLoading from 'react-loading'
 import { Dialog, Tooltip } from '@material-ui/core'
@@ -42,13 +42,11 @@ const Admin = () => {
   }, [])
 
   const Menus = [
-    { title: "Admin", icon: "fa-solid fa-hospital-user fa-2x", route: '/admin' },
-    { title: "Log Out", icon: "fa-solid fa-arrow-right-from-bracket fa-2x", route: "/", gap: true },
   ]
 
   return (
-    <div className='flex'>
-      <Sidebar menus={Menus}/>
+    <div>
+      <Navbar menus={Menus}/>
       <UsersTable loading={loading} usersList={users} setAddAUser={setUsers} setRunQuery={setRunQuery}/>
       <ToastContainer position='bottom-center' autoClose={5000} />
     </div>
@@ -70,7 +68,7 @@ const UsersTable = ({loading, usersList, setAddAUser, setRunQuery}) => {
   }, [search, usersList])
 
   return (
-    <div className='p-12 flex-1 h-screen'>
+    <div className='px-12 pt-28'>
       <div className='flex flex-row items-center justify-evenly'>
         <input 
           placeholder="Search" 
@@ -91,7 +89,7 @@ const UsersTable = ({loading, usersList, setAddAUser, setRunQuery}) => {
           <ReactLoading type='spokes' color='#6366f1' height={667} width={375} />
         </div>
       ) : (
-        <table className='overflow-auto w-full mt-10 mb-10 text-lg text-left'>
+        <table className='overflow-auto w-full mt-10 text-lg text-left'>
           <thead className='bg-indigo-500 text-white'>
             <tr>
               <th className='py-3 px-6 select-none'> Name </th>
