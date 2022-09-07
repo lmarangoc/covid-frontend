@@ -328,9 +328,6 @@ const Modal = ({openModal, setOpenModal, setRunQuery, cases, caseInformation, se
             </div>
           </div>
         </div> 
-        <button onClick={() => updateCase()} className='bg-white text-indigo-500 py-2 px-6 mr-7 rounded hover:rounded-full md:ml-8 select-none'>
-          Update
-        </button> 
       </div>
     </Dialog>
   )
