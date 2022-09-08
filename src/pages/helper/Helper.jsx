@@ -106,7 +106,7 @@ const CaseCard = ({cases, setRunQuery}) => {
     <div className='p-4 sm:w-1/2 lg:w-1/3 hover:scale-105'>
       <div className='h-full border border-gray-200 rounded-lg overflow-hidden'>
         <div className='flex flex-row justify-between'>
-          <p className='text-lg font-semibold text-gray-900 pl-4 pt-2 select-none'> 
+          <p className='text-lg font-semibold text-gray-800 pl-4 pt-2 select-none'> 
             {cases.name + " " + cases.lastname} 
           </p>
           <Tooltip title='Edit Case' arrow>
@@ -115,19 +115,19 @@ const CaseCard = ({cases, setRunQuery}) => {
             </div>
           </Tooltip>
         </div>
-        <p className='px-4 select-none'>
+        <p className='px-4 select-none text-gray-700 font-medium'>
           {cases.test_result + " " + cases.test_date }
         </p>
-        <p className='px-4 select-none'>
+        <p className='px-4 select-none text-gray-700 font-medium'>
           {"ID Card: " + cases.idcard}
         </p>
-        <p className='px-4 select-none'>
+        {/* <p className='px-4 select-none'>
           {"Residence address: " + cases.residence}
         </p>
         <p className='px-4 select-none'>
           {"Job address: " + cases.job}
-        </p>
-        <p className='px-4 pb-3 select-none'> 
+        </p> */}
+        <p className='px-4 pb-3 select-none text-gray-700 font-medium'> 
           {" Date of birth: " + cases.birth + " Sex: " + cases.sex}
         </p>
       </div>
