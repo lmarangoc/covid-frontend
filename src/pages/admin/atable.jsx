@@ -9,7 +9,7 @@ import { getUsers, editUser, deleteUser, createUser } from 'utils/api'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck, faBan, faPencilAlt, faTrash, faXmark } from '@fortawesome/free-solid-svg-icons'
 
-const Admin = () => {
+const ATable = () => {
 
   const [users, setUsers] = useState([])
   const [runQuery, setRunQuery] = useState(false)
@@ -361,4 +361,4 @@ const Modal = ({ stt, changeState, usersList, setAddAUser }) => {
   )
 }
 
-export default Admin
+export default ATable
