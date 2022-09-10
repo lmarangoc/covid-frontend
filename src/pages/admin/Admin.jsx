@@ -1,33 +1,28 @@
 import React, { useState, useEffect, useRef } from 'react'
 import Navbar from 'components/Navbar'
 import { nanoid } from 'nanoid'
-import ReactLoading from 'react-loading'
+import { BsPencil } from 'react-icons/bs'
+import { IoCloseOutline, IoTrashOutline } from 'react-icons/io5'
 import { Dialog, Tooltip } from '@material-ui/core'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { getUsers, editUser, deleteUser, createUser } from 'utils/api'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCheck, faBan, faPencilAlt, faTrash, faXmark } from '@fortawesome/free-solid-svg-icons'
 
 const Admin = () => {
 
   const [users, setUsers] = useState([])
   const [runQuery, setRunQuery] = useState(false)
-  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     const fetchUsers = async () => {
-      setLoading(true)
       await getUsers(
         (response) => {
           console.log('users', response.data);
           setUsers(response.data)
           setRunQuery(false)
-          setLoading(false)
         },
         (error) => {
           console.log(error)
-          setLoading(false)
         }
       )
     }
@@ -42,12 +37,13 @@ const Admin = () => {
   }, [])
 
   const Menus = [
+    { title: "Administration", route: '/admin' },
   ]
 
   return (
     <div>
       <Navbar menus={Menus}/>
-      <UsersTable loading={loading} usersList={users} setAddAUser={setUsers} setRunQuery={setRunQuery}/>
+      <UsersTable usersList={users} setAddAUser={setUsers} setRunQuery={setRunQuery}/>
       <ToastContainer position='bottom-center' autoClose={5000} />
     </div>
   )
@@ -84,39 +80,21 @@ const UsersTable = ({loading, usersList, setAddAUser, setRunQuery}) => {
           Add User
         </button>
       </div>
-      {loading ? (
-        <div className='flex justify-center items-center'>
-          <ReactLoading type='spokes' color='#6366f1' height={667} width={375} />
-        </div>
-      ) : (
-        <table className='overflow-auto w-full mt-10 text-lg text-left'>
-          <thead className='bg-indigo-500 text-white'>
-            <tr>
-              <th className='py-3 px-6 select-none'> Name </th>
-              <th className='py-3 px-6 select-none'> Lastname </th>
-              <th className='py-3 px-6 select-none'> ID Card </th>
-              <th className='py-3 px-6 select-none'> Role </th>
-              <th className='py-3 px-6 select-none'> User </th>
-              <th className='py-3 px-6 select-none'> Password </th>
-              <th className='py-3 px-6 select-none'> Action </th>
-            </tr>
-          </thead>
-          <tbody>
-            {filterU.map((user) => {
-              return (
-                <UserRow key={nanoid()} user={user} setRunQuery={setRunQuery}/>
-              )
-            })}
-          </tbody>
-        </table>
-      )}
-      <Modal stt={openModal} changeState={setOpenModal} usersList={usersList} setAddAUser={setAddAUser}/>
+      <div className='flex flex-wrap px-8 py-5'>
+        {filterU.map((user) => {
+          return (
+            <UserCard key={nanoid()} user={user} setRunQuery={setRunQuery}/>
+          )
+        })}
+      </div>
+      <Modal stt={openModal} changeState={setOpenModal} setRunQuery={setRunQuery}/>
     </div>
   )
 }
 
-const UserRow = ({ user, setRunQuery }) => {
+const UserCard = ({ user, setRunQuery }) => {
 
+  const [openModal, setOpenModal] = useState(false)
   const [edit, setEdit] = useState(false)
   const [openDialog, setOpenDialog] = useState(false)
   const [userInformation, setUserInformation] = useState({
@@ -128,21 +106,9 @@ const UserRow = ({ user, setRunQuery }) => {
     password: user.password,
   })
 
-  const updateUser = async () =>{
-    await editUser(
-      user._id,
-      userInformation,
-      (response) => {
-        console.log(response.data);
-        toast.success('User modified successfully');
-        setEdit(false);
-        setRunQuery(true);
-      },
-      (error) => {
-        console.error(error);
-        toast.error('Error modifying user');
-      },
-    )
+  const isEditing = () => {
+    setOpenModal((c) => !c)
+    setEdit(!edit)
   }
 
   const eraseUser = async () => {
@@ -162,124 +128,168 @@ const UserRow = ({ user, setRunQuery }) => {
   }
 
   return (
-    <tr>
-      {edit ? (
-        <>
-          <td>
-            <input 
-              type="text" 
-              value={userInformation.name} 
-              onChange={e => setUserInformation({...userInformation, name:e.target.value})} 
-              className='bg-gray-50 border border-gray-600 p-2 rounded-lg m-2 w-full text-base'
-            />
-          </td>
-          <td>
-            <input 
-              type="text" 
-              value={userInformation.lastname} 
-              onChange={e => setUserInformation({...userInformation, lastname:e.target.value})} 
-              className='bg-gray-50 border border-gray-600 p-2 rounded-lg m-2 w-full text-base'
-            />
-          </td>
-          <td>
-            <input 
-              type="text" 
-              value={userInformation.idcard} 
-              onChange={e => setUserInformation({...userInformation, idcard:e.target.value})} 
-              className='bg-gray-50 border border-gray-600 p-2 rounded-lg m-2 w-full text-base'
-            />
-          </td>
-          <td>
-            <input 
-              type="text" 
-              value={userInformation.role} 
-              onChange={e => setUserInformation({...userInformation, role:e.target.value})} 
-              className='bg-gray-50 border border-gray-600 p-2 rounded-lg m-2 w-full text-base'
-            />
-          </td>
-          <td>
-            <input 
-              type="text" 
-              value={userInformation.user} 
-              onChange={e => setUserInformation({...userInformation, user:e.target.value})} 
-              className='bg-gray-50 border border-gray-600 p-2 rounded-lg m-2 w-full text-base'
-            />
-          </td>
-          <td>
-            <input 
-              type="text" 
-              value={userInformation.password} 
-              onChange={e => setUserInformation({...userInformation, password:e.target.value})} 
-              className='bg-gray-50 border border-gray-600 p-2 rounded-lg m-2 w-full text-base'
-            />
-          </td>
-        </>
-      ) : (
-        <>
-          <td className='py-4 px-6 text-base bg-gray-50 border-b'> {user.name} </td>
-          <td className='py-4 px-6 text-base bg-gray-50 border-b'> {user.lastname} </td>
-          <td className='py-4 px-6 text-base bg-gray-50 border-b'> {user.idcard}  </td>
-          <td className='py-4 px-6 text-base bg-gray-50 border-b'> {user.role} </td>
-          <td className='py-4 px-6 text-base bg-gray-50 border-b'> {user.user} </td>
-          <td className='py-4 px-6 text-base bg-gray-50 border-b'> {user.password} </td>
-        </>
-      )}
-
-      <td className='bg-gray-50 border-b'>
-        <div className='flex w-full justify-around'>
-          {edit ? (
-            <>
-              <Tooltip title='Confirm edition' arrow>
-                <FontAwesomeIcon icon={faCheck} 
-                  onClick={() => updateUser()}
-                  className='text-green-600 hover:text-green-500'
-                />
-              </Tooltip>
-              <Tooltip title='Cancel edition' arrow>
-                <FontAwesomeIcon icon={faBan} 
-                  onClick={() => setEdit(!edit)}
-                  className='text-red-600 hover:text-red-500'
-                />
-              </Tooltip>
-            </>
-          ) : (
-            <>
-              <Tooltip title='Edit user' arrow>
-                <FontAwesomeIcon icon={faPencilAlt} 
-                  onClick={() => setEdit(!edit)}
-                  className='text-blue-600 hover:text-blue-500'
-                />
-              </Tooltip>
-              <Tooltip title='Delete user' arrow>
-                <FontAwesomeIcon icon={faTrash} 
-                  onClick={() => setOpenDialog(true)}
-                  className='text-red-600 hover:text-red-500'/>
-              </Tooltip>
-            </>
-          )}
-        </div>
-        <Dialog open={openDialog}>
-          <div className='p-8 flex flex-col'>
-            <h1 className='text-gray-900 text-2xl font-bold'>
-              Are you sure you want to remove the user?
-            </h1>
-            <div className='flex w-full items-center justify-center my-4'>
-              <button onClick={() => eraseUser()} className='mx-2 px-4 py-2 bg-green-500 text-white hover:bg-green-700 rounded-md shadow-md'>
-                Sí
-              </button>
-              <button onClick={() => setOpenDialog(false)} className='mx-2 px-4 py-2 bg-red-500 text-white hover:bg-red-700 rounded-md shadow-md'>
-                No
-              </button>
-            </div>
+    <div className='p-4 sm:w-1/2 lg:w-1/3 hover:scale-105'>
+      <div className='h-full border border-gray-200 rounded-lg overflow-hidden'>
+        <div className='flex flex-row justify-between'> 
+          <p className='text-lg font-medium text-gray-800 pl-4 pt-2 select-none'>
+            {user.name + " " + user.lastname}
+          </p>
+          <div className='flex flex-row mr-4'>
+            <Tooltip title='Edit Case' arrow>
+              <div>
+                <BsPencil size={25} onClick={() => isEditing()} className='mr-4 mt-2 text-green-700 hover:text-green-500 cursor-pointer'/>
+              </div>
+            </Tooltip>
+            <Tooltip title='Delete user' arrow>
+              <div>
+                <IoTrashOutline size={25} onClick={() => setOpenDialog(true)} className='mt-2 text-red-700 hover:text-red-500 cursor-pointer'/>
+              </div>
+            </Tooltip>
           </div>
-        </Dialog>
-      </td>
-
-    </tr>
+        </div>
+        <p className='text-lg font-normal text-gray-800 px-4 select-none'>
+          {user.role + ' ' + user.idcard}
+        </p>
+        <p className='text-lg font-normal text-gray-800 px-4 select-none'>
+          {user.user + ' ' + user.password}
+        </p>
+      </div>
+      <Dialog open={openDialog}>
+        <div className='px-8 pt-4 pb-2 flex flex-col'>
+          <h1 className='text-gray-900 text-2xl font-medium'>
+            Are you sure, you want to remove the user?
+          </h1>
+          <div className='flex w-full items-center justify-center my-4'>
+            <button onClick={() => eraseUser()} className='mx-2 px-4 py-2 bg-green-500 text-white hover:bg-green-700 rounded-md shadow-md'>
+              Sí
+            </button>
+            <button onClick={() => setOpenDialog(false)} className='mx-2 px-4 py-2 bg-red-500 text-white hover:bg-red-700 rounded-md shadow-md'>
+              No
+            </button>
+          </div>
+        </div>
+      </Dialog>
+      <EditModal openModal={openModal} setOpenModal={setOpenModal} setRunQuery={setRunQuery} user={user} userInformation={userInformation} setUserInformation={setUserInformation} edit={edit} setEdit={setEdit}/>
+    </div>
   )
 }
 
-const Modal = ({ stt, changeState, usersList, setAddAUser }) => {
+const EditModal = ({openModal, setOpenModal, setRunQuery, user, userInformation, setUserInformation, edit, setEdit}) => {
+
+  const updateUser = async () =>{
+    await editUser(
+      user._id,
+      userInformation,
+      (response) => {
+        console.log(response.data);
+        toast.success('User modified successfully');
+        setOpenModal(false);
+        setEdit(false);
+        setRunQuery(true);
+      },
+      (error) => {
+        console.error(error);
+        toast.error('Error modifying user');
+      },
+    )
+  }
+
+  return (
+    <Dialog open={openModal}>
+      <div className='flex justify-between items-start p-3 border-b text-white bg-indigo-500'>
+        <h1 className='text-3xl font-normal ml-4 select-none'> Edit user </h1>
+        <button onClick={() => setOpenModal(false)}>
+          <IoCloseOutline  className='w-10 h-10 p-1 hover:bg-indigo-600 rounded-lg'/>
+        </button>
+      </div>
+      <div className='mt-3 mb-5 mx-7'>
+        <div className='flex flex-wrap -mx-3 mb-6'>
+          <div className='w-full h-full md:w-1/2 px-3 mb-6 md:mb-0'>
+            <label className='text-gray-700 font-semibold text-lg mb-2 select-none' htmlFor="name">
+              Name
+            </label>
+            <input 
+              type="text"
+              value={userInformation.name}
+              onChange={e => setUserInformation({...userInformation, name:e.target.value})} 
+              className='w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500'
+            />
+          </div>
+          <div className='w-full md:w-1/2 px-3'>
+            <label className='text-gray-700 font-semibold text-lg mb-2 select-none' htmlFor='lastname'>
+              Lastname
+            </label>
+            <input 
+              type="text"
+              value={userInformation.lastname} 
+              onChange={e => setUserInformation({...userInformation, lastname:e.target.value})}
+              className='w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500'
+            />
+          </div>
+        </div>
+        <div className='flex flex-wrap -mx-3 mb-6'>
+          <div className='w-full h-full md:w-1/2 px-3 mb-6 md:mb-0'>
+            <label className='text-gray-700 font-semibold text-lg mb-2 select-none' htmlFor="idcard">
+              ID Card
+            </label>
+            <input 
+              type="number"
+              value={userInformation.idcard}
+              onChange={e => setUserInformation({...userInformation, idcard:e.target.value})} 
+              className='w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500'
+            />
+          </div>
+          <div className='w-full md:w-1/2 px-3'>
+            <label className='text-gray-700 font-semibold text-lg mb-2 select-none' htmlFor='role'>
+              Role
+            </label>
+            <div>
+              <select 
+                name="role"
+                value={userInformation.role} 
+                onChange={e => setUserInformation({...userInformation, role:e.target.value})} 
+                className='w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500'
+              >
+                <option disabled>Select the state</option>
+                <option>Doctor</option>
+                <option>Helper</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div className='flex flex-wrap -mx-3 mb-6'>
+          <div className='w-full h-full md:w-1/2 px-3 mb-6 md:mb-0'>
+            <label className='text-gray-700 font-semibold text-lg mb-2 select-none' htmlFor="user">
+              Username
+            </label>
+            <input 
+              type="text"
+              value={userInformation.user}
+              onChange={e => setUserInformation({...userInformation, user:e.target.value})} 
+              className='w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500'
+            />
+          </div>
+          <div className='w-full md:w-1/2 px-3'>
+            <label className='text-gray-700 font-semibold text-lg mb-2 select-none' htmlFor='password'>
+              Password
+            </label>
+            <input 
+              type="text"
+              value={userInformation.password} 
+              onChange={e => setUserInformation({...userInformation, password:e.target.value})}
+              className='w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500'
+            />
+          </div>
+        </div>
+        <button onClick={() => updateUser()} className='bg-indigo-500 text-white w-full mt-2 mb-2 px-4 py-2 rounded hover:rounded-full select-none'> 
+          Update
+        </button>
+      </div>    
+    </Dialog> 
+  )
+}
+
+const Modal = ({ stt, changeState, setRunQuery }) => {
 
   const form = useRef(null)
 
@@ -303,7 +313,8 @@ const Modal = ({ stt, changeState, usersList, setAddAUser }) => {
       },
       (response) => {
         console.log(response.data);
-        toast.success('User created successfully')
+        toast.success('User created successfully');
+        setRunQuery(true);
       },(error) => {
         console.error(error);
         toast.error('Error creating a user');
@@ -315,18 +326,15 @@ const Modal = ({ stt, changeState, usersList, setAddAUser }) => {
   return (
     <div>
       <Dialog open={stt}>
-        <div className='w-96 h-4/5'>
+        <div className='w-96 h-full'>
           <div className='flex justify-between items-start p-3 border-b'>
-            <h1 className='text-3xl font-base select-none'> Register New User </h1>
+            <h1 className='text-3xl font-base select-none'> Register new user </h1>
             <button onClick={() => changeState(false)}>
-              <FontAwesomeIcon 
-                icon={faXmark} 
-                className='w-6 h-6 p-2 text-gray-400 hover:bg-gray-200 rounded-lg'
-              />
+              <IoCloseOutline  className='w-10 h-10 p-1 hover:bg-gray-200 rounded-lg'/>
             </button>
           </div>
           <form ref={form} onSubmit={submitForm}>
-            <div className='p-6'>
+            <div className='pl-6 pr-6 pb-6 pt-3'>
               <div className='border-b border-gray-400 pb-2 mb-3'>
                 <input type="text" className='bg-transparent border-none w-full text-gray-900 mr-3 border-transparent focus:border-transparent focus:ring-0' placeholder="Name" name="name" required />
               </div>
@@ -339,14 +347,14 @@ const Modal = ({ stt, changeState, usersList, setAddAUser }) => {
               <div className='border-b border-gray-400 py-2 mb-3'>
                 <select className='w-full border-transparent focus:border-transparent focus:ring-0 text-gray-900 mr-3' name="role" required defaultValue={0}>
                   <option disabled value={0}> Select a role </option>
-                  <option> doctor </option>
-                  <option> helper </option>
+                  <option> Doctor </option>
+                  <option> Helper </option>
                 </select>
               </div>
               <div className='border-b border-gray-400 py-2 mb-3'>
                 <input type="text" className='bg-transparent border-none w-full text-gray-900 mr-3 border-transparent focus:border-transparent focus:ring-0' placeholder="Username" name="user" required />
               </div>
-              <div className='border-b border-gray-400 py-2 mb-8'>
+              <div className='border-b border-gray-400 py-2 mb-5'>
                 <input type="password" className='bg-transparent border-none w-full text-gray-900 mr-3 border-transparent focus:border-transparent focus:ring-0' placeholder="Password" name="password" required />
               </div>
               <button type='submit' 
@@ -360,5 +368,6 @@ const Modal = ({ stt, changeState, usersList, setAddAUser }) => {
     </div>
   )
 }
+
 
 export default Admin
